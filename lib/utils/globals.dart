@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:reservation_demo/models/api_response.dart';
+import 'package:reservation_demo/screens/shared_widgets/text_widget.dart';
 import 'package:reservation_demo/utils/themes.dart';
 
 GetStorage localStore = GetStorage();
@@ -42,9 +43,8 @@ showLoadingIndicator() {
                 valueColor: AlwaysStoppedAnimation<Color>(MyThemes().primaryButtonColor),
               ),
               16.width,
-              Text(
-                "${"Please Wait"}....",
-                style: primaryTextStyle(color: MyThemes().primaryTextColor),
+              const TextWidget(
+                text: "${"Please Wait"}....",
               ),
             ],
           ),
