@@ -14,7 +14,6 @@ class ReservationsBottomSheetWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<HotelReservationController>(builder: (controller) {
       var staysList = controller.hotelReservations.reservations.first.stays;
-      //var staysList = controller.hotelReservations.reservations.first.stays;
       return Stack(
         children: [
           SingleChildScrollView(

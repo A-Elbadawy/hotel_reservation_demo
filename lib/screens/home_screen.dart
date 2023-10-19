@@ -31,20 +31,20 @@ class HomeScreenState extends State<HomeScreen> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    ///
+                    ///ReservationButton
                     _buildOpenReservationButton(),
                     15.height,
 
-                    ///
+                    ///IOSTicketButton
                     _buildShowIOSTicketButton(),
                     20.height,
 
-                    ///
+                    ///AndroidTicketButton
                     _buildShowAndroidTicketButton(),
                   ],
                 ),
 
-                ///
+                /// theme switcher
                 _buildThemeSwitcherWidget(controller),
               ],
             ),
@@ -59,10 +59,8 @@ class HomeScreenState extends State<HomeScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: ElevatedButton(
           onPressed: () async {
-            if (Get.find<HotelReservationController>()
-                .hotelReservations
-                .reservations
-                .isEmpty) {
+            // if data cached don't call again and open the bottom sheet
+            if (Get.find<HotelReservationController>().hotelReservations.reservations.isEmpty) {
               var isSuccess = await Get.find<HotelReservationController>()
                   .getHotelReservations();
               isSuccess
@@ -72,6 +70,7 @@ class HomeScreenState extends State<HomeScreen> {
                       initialChildSize: 0.50)
                   : null;
             } else {
+              ///
               showCustomBottomSheet(
                   builder: (scrollController) =>
                       ReservationsBottomSheetWidget(scrollController),
@@ -102,10 +101,8 @@ class HomeScreenState extends State<HomeScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: TextButton(
           onPressed: () async {
-            if (Get.find<HotelReservationController>()
-                .hotelReservations
-                .reservations
-                .isEmpty) {
+            // if data cached don't call again and open the bottom sheet
+            if (Get.find<HotelReservationController>().hotelReservations.reservations.isEmpty) {
               var isSuccess = await Get.find<HotelReservationController>()
                   .getHotelReservations();
               isSuccess
@@ -115,6 +112,7 @@ class HomeScreenState extends State<HomeScreen> {
                       initialChildSize: 0.40)
                   : null;
             } else {
+              ///
               showCustomBottomSheet(
                   builder: (scrollController) =>
                       TicketBottomSheetWidget(scrollController),
@@ -146,10 +144,8 @@ class HomeScreenState extends State<HomeScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: TextButton(
           onPressed: () async {
-            if (Get.find<HotelReservationController>()
-                .hotelReservations
-                .reservations
-                .isEmpty) {
+            // if data cached don't call again and open the bottom sheet
+            if (Get.find<HotelReservationController>().hotelReservations.reservations.isEmpty) {
               var isSuccess = await Get.find<HotelReservationController>()
                   .getHotelReservations();
               isSuccess
@@ -159,6 +155,8 @@ class HomeScreenState extends State<HomeScreen> {
                       initialChildSize: 0.40)
                   : null;
             } else {
+              ///
+
               showCustomBottomSheet(
                   builder: (scrollController) =>
                       TicketBottomSheetWidget(scrollController),
@@ -194,7 +192,10 @@ class HomeScreenState extends State<HomeScreen> {
             color: controller.isDark ? white : null),
         title: TextWidget(
           text: 'Theme',
-          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18, color: MyThemes().blackWhiteColor),
+          style: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 18,
+              color: MyThemes().blackWhiteColor),
         ),
         trailing: GenericSvgWidget(
           path: controller.isDark
@@ -202,22 +203,11 @@ class HomeScreenState extends State<HomeScreen> {
               : 'assets/svgs/dark_mode_icon.svg',
           onTap: () {
             setState(() {
+              // switch theme
               controller.switchTheme();
             });
           },
         ),
-        // Switch(
-        //   value: !controller.isDark,
-        //   onChanged: (value) {
-        //     setState(() {
-        //       controller.switchTheme();
-        //     });
-        //   },
-        //   activeTrackColor: appBackgroundColorDark,
-        //   activeColor: white,
-        //   inactiveThumbColor: white,
-        //   inactiveTrackColor: appBackgroundColorLight,
-        // ),
       ),
     );
   }

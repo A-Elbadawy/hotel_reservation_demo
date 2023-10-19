@@ -1,20 +1,24 @@
 //import 'package:get/get_connect/connect.dart';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:get/get.dart' hide Response;
 import 'package:reservation_demo/models/api_response.dart';
 import 'package:reservation_demo/utils/constants.dart';
 
-String noInternetMsg = 'Please Check Your Internet Connection'.tr;
-String timeoutMsg = "Time Out! Please Try Agin".tr;
-String tryAgainMsg = "Please Try Again".tr;
-String errorOccuredMsg = "An Error Occured".tr;
-String unauthorizedMsg = "You are unauthorized to complete this action".tr;
+String noInternetMsg = 'Please Check Your Internet Connection';
+String timeoutMsg = "Time Out! Please Try Agin";
+String tryAgainMsg = "Please Try Again";
+String errorOccuredMsg = "An Error Occured";
+String unauthorizedMsg = "You are unauthorized to complete this action";
 
 const int timeoutDuration = 30;
+
+///
 const baseUrl = 'https://qa-testing-backend-293b1363694d.herokuapp.com//api/v3';
+
+///
 Map<String, String> defaultHeaders() {
   return {
     'Content-Type': 'application/json',
@@ -37,13 +41,15 @@ Future<APIResponse> getRequest(String endPoint,
     }
     String url = '$baseUrl$endPoint';
     Response res = await get(Uri.parse(url), headers: allHeaders)
-        .timeout(Duration(seconds: timeoutDuration), onTimeout: (() {
+        .timeout(const Duration(seconds: timeoutDuration), onTimeout: (() {
       response.error = true;
       response.errorMessage = timeoutMsg;
       return Response('"message": "$timeoutMsg"', 408);
       //throw "Time Out! Please try again";
     }));
-    print('Status: ${res.statusCode}, URL: $url');
+    if (kDebugMode) {
+      print('Status: ${res.statusCode}, URL: $url');
+    }
     return await handleResponse(res);
   } catch (e) {
     return await handleResponseError(e);
@@ -51,8 +57,10 @@ Future<APIResponse> getRequest(String endPoint,
 }
 
 Future<APIResponse> handleResponseError(e) async {
-  print("handleResponseError");
-  print(e);
+  if (kDebugMode) {
+    print("handleResponseError");
+    print(e);
+  }
   APIResponse response = APIResponse();
   response.error = true;
   if (!await isNetworkAvailable()) {
@@ -80,7 +88,7 @@ Future<APIResponse> handleResponse(Response res) async {
         }
       } else {
         // avoid display internal server errors
-        response.errorMessage = errorOccuredMsg + ", " + tryAgainMsg;
+        response.errorMessage = "$errorOccuredMsg, $tryAgainMsg";
       }
       if (body['errors'] != null) {
         response.errors = body['errors'];
@@ -89,28 +97,15 @@ Future<APIResponse> handleResponse(Response res) async {
       if (!await isNetworkAvailable()) {
         response.errorMessage = noInternetMsg;
       } else {
-        response.errorMessage = errorOccuredMsg + ", " + tryAgainMsg;
+        response.errorMessage = "$errorOccuredMsg, $tryAgainMsg";
       }
     }
-    print("response.errorMessage");
-    print(response.errorMessage);
-    print(response.errors);
+    if (kDebugMode) {
+      print("response.errorMessage");
+      print(response.errorMessage);
+      print(response.errors);
+    }
+
   }
   return response;
-}
-
-Future handleResponse_old(Response response) async {
-  if (response.statusCode.isSuccessful()) {
-    return response.body.isJson() ? jsonDecode(response.body) : response.body;
-  } else {
-    if (response.body.isJson()) {
-      throw jsonDecode(response.body);
-    } else {
-      if (!await isNetworkAvailable()) {
-        throw noInternetMsg;
-      } else {
-        throw 'Please try again';
-      }
-    }
-  }
 }

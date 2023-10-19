@@ -9,7 +9,7 @@ import 'package:reservation_demo/utils/themes.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  ///
+  //init storage : must complete first
   await GetStorage.init();
 
   ///

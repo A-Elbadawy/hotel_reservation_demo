@@ -36,26 +36,22 @@ showLoadingIndicator() {
           child: Row(
             children: [
               16.width,
-              const CircularProgressIndicator(
-                backgroundColor: Color(0xffD6D6D6),
+              CircularProgressIndicator(
+                backgroundColor: const Color(0xffD6D6D6),
                 strokeWidth: 4,
-                valueColor: AlwaysStoppedAnimation<Color>(appColorPrimary),
+                valueColor: AlwaysStoppedAnimation<Color>(MyThemes().primaryButtonColor),
               ),
               16.width,
               Text(
                 "${"Please Wait"}....",
-                style: primaryTextStyle(color: primaryTextColor),
+                style: primaryTextStyle(color: MyThemes().primaryTextColor),
               ),
             ],
           ),
         ),
       ),
     ),
-    //barrierDismissible: false,
   );
-  // _loadingDialogContext = Get.context;
-  //print("_loadingDialogContext");
-  //print(_loadingDialogContext);
 }
 
 showResponseMsgSnackBar(APIResponse response) {

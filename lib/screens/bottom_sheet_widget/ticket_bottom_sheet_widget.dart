@@ -15,6 +15,7 @@ class TicketBottomSheetWidget extends StatelessWidget {
     return GetBuilder<HotelReservationController>(builder: (controller) {
       return Stack(
         children: [
+          ///TicketCardWidget
           SingleChildScrollView(
             controller: scrollController,
             child: Container(
@@ -24,6 +25,7 @@ class TicketBottomSheetWidget extends StatelessWidget {
                       .hotelReservations.reservations.first.userTickets.first),
             ),
           ),
+          ///
           Container(
             height: 25,
             width: MediaQuery.of(context).size.width,

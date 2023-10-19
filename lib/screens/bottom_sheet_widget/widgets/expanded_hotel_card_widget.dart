@@ -36,6 +36,7 @@ class _ExpandedHotelCardWidgetState extends State<ExpandedHotelCardWidget> {
         InkWell(
           onTap: () {
             setState(() {
+              //open & close expanded hotel card widget
               _isClicked = !_isClicked;
             });
           },

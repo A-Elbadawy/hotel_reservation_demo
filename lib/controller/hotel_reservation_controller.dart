@@ -4,7 +4,7 @@ import 'package:reservation_demo/services/hotel_reservation_service.dart';
 import 'package:reservation_demo/utils/globals.dart';
 
 class HotelReservationController extends GetxController {
-  ///
+  ///hotelReservations model
   HotelReservations hotelReservations = HotelReservations(reservations: []);
 
   ///
@@ -13,13 +13,14 @@ class HotelReservationController extends GetxController {
     loading = true;
     var res = await HotelReservationService().getHotelReservations();
     loading = false;
-    // 2.Get response with id //return newCategory;
+    // 2.Get response
     if (res.data != null) {
-      // 3.Add to app category list
+      // 3.change the data
       hotelReservations = HotelReservations.fromJson(res.data);
       update();
       return true;
     } else if (res.error) {
+      ///
       showResponseMsgSnackBar(res);
       return false;
     }

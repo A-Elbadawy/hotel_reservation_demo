@@ -26,6 +26,7 @@ class TicketCardWidget extends StatelessWidget {
                   color: MyThemes().blackWhiteColor),
             )),
         8.height,
+        ///container with bottom corner clip path
         ClipPath(
           clipper: const CustomCornerClipPath(),
           child: Container(
@@ -65,6 +66,7 @@ class TicketCardWidget extends StatelessWidget {
           ),
         ),
         1.height,
+        ///container with top corner clip path
         ClipPath(
           clipper: const CustomCornerClipPath(isTopCorners: true),
           child: Container(
