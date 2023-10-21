@@ -4,7 +4,7 @@ A Reservation Demo Flutter project.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project is a Hotel Reservation ticket Demo with Bottom sheets.
 
 A few resources to get you started if this is your first Flutter project:
 
